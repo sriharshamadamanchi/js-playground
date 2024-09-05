@@ -1,0 +1,2 @@
+(()=>{"use strict";self.onmessage=o=>{let n="";const t=console.log;console.log=function(){for(var o=arguments.length,t=new Array(o),e=0;e<o;e++)t[e]=arguments[e];n+=t.join(" ")+"\n"};const e={error:"",output:""};try{var r;new Function(o.data)(),e.output=null===(r=n)||void 0===r?void 0:r.toString()}catch(s){e.error=`Error: ${s.message}`}finally{console.log=t}self.postMessage(JSON.stringify(e))}})();
+//# sourceMappingURL=3025.74f1cdda.chunk.js.map

@@ -1,36 +1,37 @@
-import React from 'react';
-import { TextField } from '@mui/material';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import CodeEditor from '@monaco-editor/react';
+import { SUPPORTED_LANGUAGES } from '../constants';
 
 const useStyles = makeStyles(() => ({
-    codeEditor: {
-        width: '100%',
-        height: "100%",
-        backgroundColor: '#2b2d42',
-        overflowY: 'auto'
+    container: {
+        width: '70%',
+        height: "100%"
     }
 }))
 
-const Editor = ({ code, handleInputChange }: any) => {
+const Editor = ({ editorRef, code, handleInputChange, language, theme }: any) => {
     const classes = useStyles();
 
+    const onMount = (editor: any) => {
+        editorRef.current = editor
+        editor.focus()
+    }
+
+    const lan = SUPPORTED_LANGUAGES.find((lan) => lan.id === language)?.name ?? "javascript"
+
     return (
-        <TextField
-            id="codeEditor"
-            variant="standard"
-            multiline
-            autoFocus
-            placeholder="Type your JavaScript code here..."
-            value={code}
-            onChange={handleInputChange}
-            className={classes.codeEditor}
-            slotProps={{
-                input: {
-                    disableUnderline: true,
-                    style: { color: 'white', fontFamily: "Rubik", fontSize: 18, padding: 20, height: "100%", alignItems: 'flex-start' }
-                }
-            }}
-        />
+        <Box className={classes.container}>
+            <CodeEditor
+                height="100%"
+                theme={theme}
+                value={code}
+                onChange={handleInputChange}
+                onMount={onMount}
+                path={lan}
+                defaultLanguage={"javascript"}
+                options={{ fontSize: 16 }} />
+        </Box>
     );
 };
 
